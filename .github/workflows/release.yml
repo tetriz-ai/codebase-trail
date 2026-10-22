@@ -1,0 +1,99 @@
+# Copyright 2026 Workloom Solutions Private Limited
+# SPDX-License-Identifier: MIT
+name: GitHub release tarball
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  bootstrap:
+    name: Native bootstrap (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+      npm_config_audit: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.22.1"
+      - name: Verify version tag
+        run: node --input-type=module -e "import assert from 'node:assert/strict'; import {readFileSync} from 'node:fs'; const pkg=JSON.parse(readFileSync('package.json')); assert.equal(process.env.RELEASE_TAG, 'v'+pkg.version); assert.equal(pkg.private,true);"
+      - run: npm ci --no-audit
+      - run: npm run test:bootstrap
+      - run: npm run test:bootstrap:native
+
+  release:
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+      npm_config_audit: "false"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.22.1"
+          cache: npm
+      - name: Verify tag and distribution policy
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+          assert.equal(pkg.name, 'codebase-trail');
+          assert.equal(pkg.private, true, 'Registry publication must remain disabled');
+          assert.equal(process.env.RELEASE_TAG, `v${pkg.version}`, 'Tag must match package version');
+          JS
+      - run: npm ci --no-audit
+      - run: npm test
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:examples
+      - run: npm run test:install
+      - run: npm run test:bootstrap
+      - run: npm run test:release
+      - name: Prepare release artifacts
+        run: |
+          npm run release:prepare -- "$RUNNER_TEMP/release" "$GITHUB_REPOSITORY"
+      - name: Create prerelease with tarball and checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh api "repos/$GH_REPO/releases/tags/$RELEASE_TAG" --silent 2> "$RUNNER_TEMP/release-lookup-error"; then
+            echo "Release $RELEASE_TAG already exists; leaving its assets and notes unchanged."
+            exit 0
+          elif ! grep -q 'HTTP 404' "$RUNNER_TEMP/release-lookup-error"; then
+            cat "$RUNNER_TEMP/release-lookup-error" >&2
+            exit 1
+          fi
+          artifact="codebase-trail-${RELEASE_TAG#v}.tgz"
+          gh release create "$RELEASE_TAG" \
+            "$RUNNER_TEMP/release/$artifact" \
+            "$RUNNER_TEMP/release/$artifact.sha256" \
+            "$RUNNER_TEMP/release/install-macos.sh" \
+            "$RUNNER_TEMP/release/install-windows.ps1" \
+            "$RUNNER_TEMP/release/SHA256SUMS" \
+            "$RUNNER_TEMP/release/INSTALL.md" \
+            --verify-tag --prerelease --title "$RELEASE_TAG" \
+            --notes-file "$RUNNER_TEMP/release/release-notes.md"

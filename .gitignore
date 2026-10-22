@@ -1,0 +1,16 @@
+test-results/
+playwright-report/
+.stryker-tmp/
+reports/
+node_modules/
+*.tgz
+.code-learning-data/
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage/
+*.swp
+*.swo
+*~
+.idea/

@@ -1,0 +1,26 @@
+name: Bug report
+description: Report incorrect behavior in Codebase Trail.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Report vulnerabilities privately at https://github.com/workloom-dev/codebase-trail/security/advisories/new. Keep repository evidence and credentials out of this report.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce
+      description: Include the Codebase Trail version, Node.js version, OS, and provider type. Use a synthetic example without credentials.
+    validations:
+      required: true

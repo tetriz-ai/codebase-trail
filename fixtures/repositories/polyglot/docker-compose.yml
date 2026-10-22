@@ -1,0 +1,7 @@
+services:
+  api:
+    image: fixture/api
+    depends_on:
+      - worker
+  worker:
+    image: fixture/worker

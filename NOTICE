@@ -1,0 +1,15 @@
+Copyright 2026 Workloom Solutions Private Limited
+Codebase Trail
+
+This repository includes the following third-party material:
+
+- CODE_OF_CONDUCT.md is adapted from the Contributor Covenant, version 2.1,
+  https://www.contributor-covenant.org/version/2/1/code_of_conduct/,
+  licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.
+
+- The Blocks icon in index.html, settings.html and the README banners is from
+  Lucide, under the ISC License. Copyright (c) for portions of Lucide are held
+  by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c)
+  for Lucide are held by Lucide Contributors 2022.
+  Source: https://github.com/lucide-icons/lucide/blob/d15973e7ef8dd825998ef7e715fba0b183e997bd/icons/blocks.svg
+  The complete copyright, permission and disclaimer are in third_party/licenses/lucide.txt.

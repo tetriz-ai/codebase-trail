@@ -1,0 +1,2 @@
+CREATE TABLE parent (id INTEGER PRIMARY KEY);
+CREATE TABLE child (id INTEGER, parent_id INTEGER REFERENCES parent(id));

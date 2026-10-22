@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="200" viewBox="0 0 880 200" role="img" aria-labelledby="title description">
+<!-- Blocks artwork: Lucide Icons and Contributors (ISC); see NOTICE and third_party/licenses/lucide.txt for source, copyright and license. -->
+  <title id="title">Codebase Trail</title>
+  <desc id="description">Keep up with the code your agents write.</desc>
+  <rect width="880" height="200" rx="18" fill="#131b2b"/>
+  <path d="M0 199.5H880" stroke="#344158"/>
+  <rect x="40" y="48" width="90" height="90" rx="19" fill="#e8eeff"/>
+  <g fill="none" stroke="#14213d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(62 70) scale(2)">
+    <path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/>
+    <rect x="14" y="2" width="8" height="8" rx="1"/>
+  </g>
+  <text x="155" y="96" fill="#f5f7ff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="48" font-weight="760" letter-spacing="-1.8">Codebase Trail</text>
+  <text x="157" y="133" fill="#a9b8d0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="21">Keep up with the code your agents write.</text>
+</svg>

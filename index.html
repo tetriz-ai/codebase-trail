@@ -1,0 +1,485 @@
+<!doctype html>
+<!-- Copyright 2026 Workloom Solutions Private Limited
+SPDX-License-Identifier: MIT -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codebase Trail</title>
+    <meta name="description" content="Generate evidence-grounded questions from your own repository changes and architecture." />
+    <style nonce="__CODE_LEARNING_CSP_NONCE__">
+      :root { color-scheme:light; --ink:#14213d; --muted:#5f6c82; --line:#dbe3ee; --surface:#fff; --canvas:#f7f9fd; --accent:#315be8; --accent-dark:#2445bd; --accent-soft:#edf2ff; --violet:#7859e8; --good:#087443; --good-soft:#e9f8ef; --bad:#b3261e; --bad-soft:#fff0ef; --warn:#8a4b08; --warn-soft:#fff7e8; --shadow:0 18px 44px rgba(35, 62, 110, .10); }
+      * { box-sizing:border-box; } body { margin:0; background:radial-gradient(circle at 80% -10%, #e5ebff 0, transparent 32rem), var(--canvas); color:var(--ink); font:15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; } main { max-width:1060px; margin:0 auto; padding:30px 24px 80px; } .brand { display:flex; align-items:center; gap:9px; font-size:14px; font-weight:760; letter-spacing:-.015em; } .brand-mark { display:grid; place-items:center; width:27px; height:27px; border-radius:8px; color:white; background:linear-gradient(135deg, var(--accent), var(--violet)); box-shadow:0 5px 12px #315be845; font-size:14px; } .eyebrow { color:var(--accent); font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase; } h1 { max-width:720px; font-size:48px; line-height:1.06; letter-spacing:-.055em; margin:12px 0 15px; } h2 { font-size:22px; letter-spacing:-.025em; margin:0 0 14px; } h3 { font-size:15px; margin:0 0 6px; } p { margin:0 0 14px; } .sub { color:var(--muted); max-width:610px; font-size:17px; } .hero { display:grid; grid-template-columns:1.3fr .7fr; gap:48px; align-items:center; padding:66px 0 50px; } .proof { border:1px solid #d8e1fa; border-radius:18px; padding:23px; background:linear-gradient(145deg, #fff, #f3f6ff); box-shadow:var(--shadow); } .proof-title { font-size:13px; font-weight:750; color:#324369; margin:0 0 17px; } .proof-line { display:flex; align-items:flex-start; gap:10px; margin:14px 0; color:#33435f; font-size:14px; } .proof-icon { display:grid; place-items:center; flex:none; width:22px; height:22px; border-radius:50%; background:#dfe8ff; color:var(--accent); font-size:13px; font-weight:800; } .proof strong { color:var(--ink); } .promise { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:26px; } .promise div { padding:14px; border:1px solid var(--line); border-radius:11px; background:#ffffff9e; } .promise b { display:block; font-size:13px; margin-bottom:2px; } .promise span { color:var(--muted); font-size:12px; line-height:1.35; display:block; } .bar, .card, .notice, details { background:var(--surface); border:1px solid var(--line); border-radius:15px; } .bar { display:flex; gap:18px; align-items:end; justify-content:space-between; padding:20px; box-shadow:0 8px 24px rgba(35,62,110,.05); } .bar-heading { font-size:16px; font-weight:760; margin:0 0 4px; letter-spacing:-.015em; } .bar-actions { display:flex; gap:9px; align-items:end; } label { display:block; font-size:13px; font-weight:650; margin-bottom:6px; } select, textarea { font:inherit; border:1px solid #c7d0de; border-radius:8px; padding:9px 10px; background:#fff; color:var(--ink); } select { min-width:150px; } textarea { width:100%; min-height:86px; resize:vertical; } button { font:inherit; cursor:pointer; border-radius:8px; padding:11px 15px; border:1px solid transparent; font-weight:700; transition:transform .15s ease, box-shadow .15s ease, background .15s ease; } button:hover:not(:disabled) { transform:translateY(-1px); } button:disabled { cursor:not-allowed; opacity:.55; } .primary { background:linear-gradient(135deg, var(--accent), #5276ed); color:white; box-shadow:0 7px 15px #315be836; } .primary:hover:not(:disabled) { background:linear-gradient(135deg, var(--accent-dark), var(--accent)); box-shadow:0 9px 19px #315be84a; } .secondary { color:var(--ink); background:white; border-color:#c7d0de; } .card { padding:30px; box-shadow:var(--shadow); } .hidden { display:none !important; } .context { border-left:4px solid var(--accent); padding:13px 15px; margin:15px 0; background:#fafbff; border-radius:0 9px 9px 0; } .context-title { font-weight:760; margin-bottom:4px; } .badge { display:inline-block; padding:3px 8px; border-radius:999px; background:var(--warn-soft); color:var(--warn); font-size:12px; font-weight:750; } .payoff { background:linear-gradient(100deg, var(--accent-soft), #f5f2ff); color:#263970; border-radius:10px; padding:13px 14px; margin:16px 0 23px; } .example { border:1px solid #d8e1fa; background:#f8faff; border-radius:9px; padding:13px 14px; margin:0 0 20px; white-space:pre-wrap; } .option { display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin:10px 0; padding:15px; color:var(--ink); background:white; border-color:var(--line); font-weight:500; } .option:hover:not(:disabled), .option.selected { border-color:var(--accent); background:var(--accent-soft); } .letter { min-width:25px; height:25px; display:grid; place-items:center; border:1px solid currentColor; border-radius:50%; color:var(--accent); font-size:12px; font-weight:750; } .actions { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-top:22px; } .answer { border-top:1px solid var(--line); margin-top:24px; padding-top:22px; } .answer.correct { border:1px solid #aae0c0; background:var(--good-soft); border-radius:9px; padding:15px; } .answer.incorrect { border:1px solid #ffc6c2; background:var(--bad-soft); border-radius:9px; padding:15px; } .concepts { display:flex; flex-wrap:wrap; gap:7px; } .concept { background:#eef1f6; padding:5px 9px; border-radius:999px; font-size:13px; } .feedback { margin-top:22px; padding:12px 14px; } .feedback > summary { padding:0; } .feedback[open] > summary { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line); } .feedback button { padding:6px 10px; margin:4px 6px 4px 0; font-size:13px; color:var(--muted); background:white; border-color:var(--line); } .feedback button.active { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); } .feedback .primary { color:white; margin-top:14px; background:linear-gradient(135deg, var(--accent), #5276ed); border-color:transparent; box-shadow:0 7px 15px #315be836; } .feedback .primary:hover:not(:disabled) { background:linear-gradient(135deg, var(--accent-dark), var(--accent)); box-shadow:0 9px 19px #315be84a; } .reason-panel { margin-top:12px; padding:12px 14px; border-radius:9px; background:#fafbfe; border:1px solid var(--line); } .save-note { margin:10px 0 0; color:var(--good); font-size:13px; } .notice { padding:15px 17px; margin:16px 0; color:var(--muted); } .notice.error { color:var(--bad); border-color:#ffc6c2; background:var(--bad-soft); } .notice.loading { display:flex; align-items:center; gap:11px; color:#243a79; background:var(--accent-soft); border-color:#c8d6ff; font-weight:650; } .notice.loading::before { content:''; width:17px; height:17px; flex:none; border:2px solid #b7c7ff; border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; } @keyframes spin { to { transform:rotate(360deg); } } details { margin-top:22px; padding:12px 14px; } summary { cursor:pointer; font-weight:650; } .sources { margin:12px 0 0; padding:0; list-style:none; } .sources li { display:flex; justify-content:space-between; gap:14px; padding:7px 0; border-top:1px solid #edf0f5; font-size:13px; } .caveats { max-width:780px; margin:38px auto 0; color:var(--muted); font-size:12px; line-height:1.55; } .caveats p { margin:0 0 8px; } a { color:var(--accent); } .meta { color:var(--muted); font-size:13px; } .model { font:12px ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--muted); } @media (max-width:760px) { main { padding:24px 16px 60px; } .hero { grid-template-columns:1fr; gap:28px; padding:45px 0 35px; } h1 { font-size:38px; } .promise { grid-template-columns:1fr; } .bar { align-items:stretch; flex-wrap:wrap; } } @media (max-width:520px) { .bar { display:block; } .bar-actions { display:block; } .bar button { width:100%; margin-top:13px; } .actions { align-items:stretch; flex-direction:column-reverse; } h1 { font-size:34px; } .card { padding:22px; } }
+      html { scroll-behavior:smooth; } main { max-width:1120px; } .skip-link { position:fixed; z-index:20; left:16px; top:-10000px; padding:9px 13px; border-radius:8px; background:var(--ink); color:white;  } .skip-link:focus { top:10px; }
+      button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible { outline:3px solid #7ea996; outline-offset:3px; }
+      .runtime-strip { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; align-items:center; margin:22px 0 12px; padding:13px 16px; border:1px solid var(--line); border-radius:13px; background:#ffffffbd; backdrop-filter:blur(10px); box-shadow:0 6px 20px rgba(35,62,110,.05); }
+      .runtime-cell { min-width:0; } .runtime-label { display:block; color:var(--muted); font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; } .runtime-value { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; }
+      .status-dot { display:inline-block; width:8px; height:8px; margin-right:6px; border-radius:50%; background:var(--warn); } .status-dot.ready { background:var(--good); }
+      .history-meta { display:flex; gap:8px; justify-content:space-between; color:var(--muted); font-size:11px; } .history-status { color:var(--good); font-weight:800; } .history-status.review { color:var(--warn); }
+      .option[aria-checked="true"] { border-color:var(--accent); background:var(--accent-soft); } .badge.good { color:var(--good); background:var(--good-soft); } .badge.neutral { color:#44516a; background:#edf0f5; }
+      @media (max-width:900px) { .runtime-strip { grid-template-columns:1fr 1fr; } .runtime-actions { grid-column:1 / -1; } }
+      @media (max-width:520px) { .runtime-strip { grid-template-columns:1fr; } .runtime-actions { grid-column:auto; } }
+      @media (prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } button:hover:not(:disabled) { transform:none; } }
+      /* Workspace layout styles. */
+      :root { color-scheme:light; --ink:#20231f; --muted:#596159; --line:#d2d5cc; --surface:#fbfaf6; --surface-raised:#ffffff; --canvas:#f2f1eb; --accent:#246653; --accent-dark:#194b3d; --accent-soft:#e3eee9; --button:#205f50; --button-hover:#17483c; --good:#256448; --good-soft:#e4f0e9; --bad:#9f3f36; --bad-soft:#f8eae7; --warn:#775516; --warn-soft:#f5edd9; --shadow:0 16px 42px rgba(41,48,39,.07); --radius-panel:12px; --radius-control:7px; }
+      body { min-width:320px; background:var(--canvas); color:var(--ink); font:16px/1.55 "Avenir Next",Avenir,"Segoe UI",ui-sans-serif,system-ui,sans-serif; text-rendering:optimizeLegibility; }
+      main { max-width:1240px; padding:0 28px 72px; }
+      .topbar { min-height:64px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); }
+      .brand { gap:10px; color:var(--ink); } .brand-copy { display:flex; flex-direction:column; gap:1px; line-height:1.25; } .brand-copy small { color:var(--muted); font-size:11px; font-weight:500; letter-spacing:0; } .brand-mark { width:30px; height:30px; border-radius:7px; background:var(--ink); box-shadow:none; } .brand-mark svg { display:block; width:21px; height:21px; }
+      .primary-nav { display:flex; gap:28px; min-height:54px; align-items:end; border-bottom:1px solid var(--line); } .nav-tab { position:relative; min-height:46px; padding:0 2px 12px; border:0; border-radius:0; color:var(--muted); background:transparent; box-shadow:none; font-size:14px; font-weight:650; } .nav-tab::after { content:""; position:absolute; right:0; bottom:-1px; left:0; height:2px; background:transparent; } .nav-tab:hover:not(:disabled) { color:var(--ink); transform:none; } .nav-tab[aria-selected="true"] { color:var(--ink); } .nav-tab[aria-selected="true"]::after { background:var(--accent); } .nav-count { display:inline-grid; min-width:21px; min-height:19px; margin-left:5px; place-items:center; border-radius:6px; color:var(--muted); background:var(--surface-raised); font:650 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace; }
+      .view { padding-top:32px; } .view-heading { margin-bottom:22px; } .view-heading h1 { margin:0 0 7px; } .view-heading .sub { margin-bottom:0; }
+      .intro { display:block; padding:0; } .intro-copy { max-width:700px; }
+      .eyebrow { color:var(--accent); font-size:11px; letter-spacing:.08em; } h1 { max-width:760px; margin:0 0 10px; font-size:clamp(32px,4vw,46px); line-height:1.06; letter-spacing:-.04em; text-wrap:balance; } h2 { color:var(--ink); text-wrap:balance; } .sub { max-width:62ch; color:var(--muted); font-size:16px; line-height:1.58; text-wrap:pretty; }
+      .learning-loop { margin:0; padding:0; list-style:none; counter-reset:loop; border-top:1px solid var(--line); } .learning-loop li { counter-increment:loop; display:grid; grid-template-columns:24px 1fr; gap:11px; padding:12px 0; border-bottom:1px solid var(--line); color:var(--muted); font-size:13px; } .learning-loop li::before { content:counter(loop,decimal-leading-zero); color:var(--accent); font:650 11px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace; font-variant-numeric:tabular-nums; } .learning-loop strong { display:block; color:var(--ink); font-size:13px; font-weight:680; }
+      .runtime-panel { margin:0 0 16px; padding:0; overflow:hidden; border-radius:var(--radius-panel); background:var(--surface); box-shadow:none; } .runtime-panel summary { padding:11px 15px; color:var(--muted); font-size:13px; } .runtime-panel[open] summary { border-bottom:1px solid var(--line); } .runtime-strip { margin:0; border:0; border-radius:0; background:transparent; box-shadow:none; backdrop-filter:none; }
+      .workspace { display:block; } .workspace-main { display:flex; min-width:0; flex-direction:column; }
+      .bar { display:block; padding:24px; border-radius:var(--radius-panel); box-shadow:none; } .bar-header { margin-bottom:20px; } .bar-heading { margin:0 0 5px; font-size:21px; line-height:1.22; letter-spacing:-.025em; } .bar-copy { max-width:62ch; }
+      .control-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; } .control { min-width:0; } label { margin-bottom:7px; color:var(--ink); font-size:13px; font-weight:650; letter-spacing:0; } .helper { display:block; min-height:36px; margin:7px 1px 0; color:var(--muted); font-size:12px; line-height:1.45; } input,select,textarea { width:100%; border:1px solid #aeb6c3; border-radius:var(--radius-control); background:var(--surface-raised); color:var(--ink); font-family:inherit; font-size:15px; } input,select { min-width:0; min-height:44px; } input { padding:9px 11px; }
+      .generate-footer { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:center; margin-top:20px; padding-top:18px; border-top:1px solid var(--line); } .source-row { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:baseline; gap:10px; margin:0; padding:0; border:0; } .source-label { color:var(--ink); font-size:12px; font-weight:700; } #source-preview { line-height:1.45; } .bar-actions { justify-content:flex-end; margin:0; }
+      button,.option,.feedback button,.history-tools button,.nav-tab,.retry-button { border-radius:var(--radius-control); font-family:inherit; font-size:14px; font-weight:650; line-height:1.2; letter-spacing:0; transition:transform .18s ease,border-color .18s ease,background-color .18s ease,color .18s ease,box-shadow .18s ease; } button:active:not(:disabled) { transform:translateY(1px) scale(.99); } .primary,.secondary { min-height:42px; padding:11px 15px; white-space:nowrap; } .primary { color:#fff; background:var(--button); box-shadow:0 5px 14px rgba(32,95,80,.16); } .primary:hover:not(:disabled) { background:var(--button-hover); box-shadow:0 7px 18px rgba(32,95,80,.2); } .secondary { color:var(--ink); border-color:#aeb5aa; background:var(--surface-raised); box-shadow:none; } .secondary:hover:not(:disabled) { border-color:var(--accent); color:var(--accent); background:var(--accent-soft); }
+      .notice { order:2; margin:12px 0 0; border-radius:12px; box-shadow:none; } .notice.loading { position:relative; display:block; overflow:hidden; padding-left:17px; color:var(--ink); border-color:var(--line); } .notice.loading::before { position:absolute; inset:auto 0 0; width:34%; height:3px; border:0; border-radius:0; background:var(--accent); animation:loading-line 1.25s ease-in-out infinite alternate; } @keyframes loading-line { from { transform:translateX(-70%); } to { transform:translateX(290%); } } #item { order:3; margin-top:18px; }
+      .question-empty { order:3; margin-top:16px; padding:34px 28px; border:1px dashed #aeb6c3; border-radius:var(--radius-panel); background:rgba(255,255,255,.38); } .question-empty h2 { margin:0 0 5px; font-size:18px; } .question-empty p { max-width:58ch; margin:0; color:var(--muted); }
+      .card { border-radius:var(--radius-panel); box-shadow:var(--shadow); } .history-layout { display:grid; grid-template-columns:minmax(310px,.72fr) minmax(0,1.28fr); gap:16px; align-items:start; } .history-panel,.history-review { min-width:0; padding:24px; border-color:var(--line); background:var(--surface); box-shadow:none; } .history-head { display:flex; align-items:start; justify-content:space-between; gap:10px; } .history-head h2 { margin-bottom:3px; font-size:19px; } .count-badge,.badge { border-radius:7px; } .history-controls { display:grid; grid-template-columns:minmax(0,1fr) 140px; gap:8px; margin-top:17px; } .history-controls label { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; } .history-list { max-height:min(62vh,680px); margin:12px 0 0; padding:0; overflow:auto; overscroll-behavior:contain; scrollbar-gutter:stable; list-style:none; } .history-entry { padding:0; border-top:1px solid var(--line); } .history-entry:first-child { border-top:1px solid var(--line); } .history-entry-button { width:100%; padding:15px 10px; border:0; border-radius:0; color:var(--ink); background:transparent; text-align:left; } .history-entry-button:hover,.history-entry-button[aria-current="true"] { background:var(--accent-soft); transform:none; } .history-entry-button[aria-current="true"] { box-shadow:inset 3px 0 var(--accent); } .history-question { display:block; margin:5px 0 7px; color:var(--ink); font-size:14px; font-weight:650; line-height:1.35; } .history-review { position:sticky; top:16px; min-height:330px; max-height:calc(100dvh - 32px); overflow:auto; } .history-review-empty { display:grid; min-height:280px; place-content:center; padding:30px; color:var(--muted); text-align:center; } .history-review-empty h2 { margin-bottom:6px; color:var(--ink); font-size:19px; } .review-kicker { display:flex; flex-wrap:wrap; gap:8px 14px; margin-bottom:16px; color:var(--muted); font-size:12px; } .review-question { margin:0 0 20px; font-size:22px; line-height:1.3; letter-spacing:-.02em; } .review-options { display:grid; gap:8px; margin:0 0 22px; padding:0; list-style:none; } .review-option { display:grid; grid-template-columns:26px minmax(0,1fr) auto; gap:10px; align-items:start; padding:11px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface-raised); } .review-option.correct { border-color:#98bfaa; background:var(--good-soft); } .review-option.selected:not(.correct) { border-color:#d7aaa4; background:var(--bad-soft); } .review-option-label { display:grid; width:24px; height:24px; place-items:center; border:1px solid currentColor; border-radius:6px; color:var(--muted); font:650 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace; } .review-marker { color:var(--muted); font-size:12px; font-weight:650; } .review-explanation { padding-top:18px; border-top:1px solid var(--line); } .review-explanation h3,.review-feedback h3 { font-size:14px; } .review-feedback { margin-top:20px; padding:14px; border-radius:8px; background:var(--canvas); } .history-tools { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); } .history-tools button { width:100%; min-height:42px; padding:11px 15px; } .empty-state { margin:18px 0 4px; padding:24px 16px; border:1px dashed #aeb6c3; border-radius:12px; background:rgba(255,255,255,.42); color:var(--muted); text-align:center; font-size:13px; } .empty-state strong { display:block; margin-bottom:4px; color:var(--ink); }
+      .option { border-radius:12px; box-shadow:none; transition:transform .16s ease,border-color .16s ease,background-color .16s ease; } .option:hover:not(:disabled) { transform:translateX(3px); } .letter { border-radius:7px; } .context { border-left-color:var(--accent); background:var(--accent-soft); } .payoff { background:var(--accent-soft); color:var(--ink); } .example { border-color:var(--line); background:var(--canvas); }
+      .option,.feedback button { color:var(--ink); background:var(--surface-raised); } .feedback .primary { color:#fff; background:var(--button); border-color:var(--button); box-shadow:0 5px 14px rgba(32,95,80,.16); } .feedback .primary:hover:not(:disabled) { background:var(--button-hover); border-color:var(--button-hover); box-shadow:0 7px 18px rgba(32,95,80,.2); } .feedback-row,.feedback-notes { margin-top:13px; } .retry-button { margin-left:8px; padding:6px 10px; }
+      .grounding-note { margin:0; padding:12px 16px 14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; } .model,.runtime-value,.count-badge { font-variant-numeric:tabular-nums; }
+      .evidence-disclosure { margin-top:20px; padding:0; overflow:hidden; border-radius:9px; background:var(--canvas); box-shadow:none; }
+      .evidence-disclosure summary { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; color:var(--ink); font-size:13px; }
+      .evidence-disclosure[open] summary { border-bottom:1px solid var(--line); }
+      .evidence-disclosure > .meta { margin:12px 14px; }
+      .evidence-disclosure .sources { margin:0 14px 12px; }
+      .evidence-disclosure .sources li span:last-child { max-width:58%; overflow-wrap:anywhere; color:var(--muted); text-align:right; }
+      .evidence-count { flex:none; padding:3px 7px; border-radius:6px; color:var(--muted); background:var(--surface-raised); font-size:11px; font-weight:650; }
+      @media (max-width:900px) { main { padding-inline:20px; } .history-layout { grid-template-columns:1fr; } .history-review { position:static; min-height:0; max-height:none; overflow:visible; } .history-list { max-height:52vh; } }
+      @media (max-width:700px) { .control-grid { grid-template-columns:1fr; } .helper { min-height:0; } .generate-footer { grid-template-columns:1fr; } .runtime-strip { grid-template-columns:1fr; } .runtime-actions { grid-column:auto; } }
+      @media (max-width:520px) { main { padding-inline:16px; } .topbar { min-height:60px; } .brand-product { display:none; } .view { padding-top:26px; } h1 { font-size:32px; } .bar { padding:20px; } .bar-actions { display:flex; flex-direction:column-reverse; } .bar button { width:100%; margin-top:0; } .source-row { display:block; } .source-label { display:block; margin-bottom:5px; } .card { padding:20px; } .question-empty { padding:26px 20px; } .history-controls,.history-tools { grid-template-columns:1fr; } .evidence-disclosure .sources li { display:block; } .evidence-disclosure .sources li span:last-child { display:block; max-width:none; margin-top:4px; text-align:left; } }
+      .notice.loading { padding:0; border-color:#c6d8ce; background:#f8fbf8; }
+      .notice.loading::before { display:none; }
+      .work-state { position:relative; display:grid; grid-template-columns:76px minmax(0,1fr) auto; gap:18px; align-items:center; min-height:118px; padding:22px 24px; overflow:hidden; }
+      .work-state::after { content:""; position:absolute; inset:auto 0 0; height:3px; background:linear-gradient(90deg,transparent,var(--accent),transparent); transform:translateX(-100%); animation:work-sweep 2.2s ease-in-out infinite; }
+      .work-art { position:relative; width:66px; height:66px; display:grid; place-items:center; border:1px solid #bad2c5; border-radius:17px; background:#eaf3ed; }
+      .work-art::before,.work-art::after { content:""; position:absolute; width:10px; height:10px; border-radius:3px; background:var(--accent); animation:work-float 2.6s ease-in-out infinite; }
+      .work-art::before { top:8px; left:8px; } .work-art::after { right:8px; bottom:8px; animation-delay:-1.3s; }
+      .work-art span { width:30px; height:30px; display:grid; place-items:center; border:1px solid #80aa94; border-radius:9px; color:var(--accent-dark); background:white; font:750 17px/1 ui-monospace,SFMono-Regular,Menlo,monospace; animation:work-breathe 2.6s ease-in-out infinite; }
+      .work-copy h3 { margin:0 0 4px; font-size:17px; line-height:1.25; letter-spacing:-.025em; } .work-copy p { max-width:57ch; margin:0; color:var(--muted); font-size:13px; line-height:1.5; }
+      .work-clock { align-self:start; color:var(--muted); font:650 12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; font-variant-numeric:tabular-nums; white-space:nowrap; }
+      .source-row.indexing #source-preview::before { content:""; display:inline-block; width:8px; height:8px; margin-right:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 rgba(36,102,83,.25); animation:work-pulse 1.8s ease-out infinite; }
+      .question-empty.is-working { border-style:solid; border-color:#d8e4da; background:#f7faf7; }
+      .question-empty.is-working::after { content:""; display:block; width:min(65%,390px); height:8px; margin-top:23px; border-radius:5px; background:linear-gradient(90deg,#e1ebe4 20%,#f7faf7 50%,#e1ebe4 80%); background-size:200% 100%; animation:work-shimmer 2.2s ease-in-out infinite; }
+      @keyframes work-sweep { to { transform:translateX(100%); } } @keyframes work-float { 50% { transform:translate(3px,-3px); opacity:.55; } } @keyframes work-breathe { 50% { transform:scale(1.08); box-shadow:0 5px 18px rgba(36,102,83,.13); } } @keyframes work-pulse { 70% { box-shadow:0 0 0 7px rgba(36,102,83,0); } to { box-shadow:0 0 0 0 rgba(36,102,83,0); } }
+      @keyframes work-shimmer { to { background-position-x:-200%; } }
+      @media (max-width:520px) { .work-state { grid-template-columns:48px minmax(0,1fr); gap:12px; padding:18px; } .work-art { width:46px; height:46px; border-radius:12px; } .work-art span { width:24px; height:24px; font-size:13px; } .work-art::before,.work-art::after { width:6px; height:6px; } .work-clock { grid-column:2; margin-top:-5px; } }
+      @media (prefers-reduced-motion:reduce) { .work-state::after,.work-art::before,.work-art::after,.work-art span,.source-row.indexing #source-preview::before,.question-empty.is-working::after { animation:none; } .work-state::after { transform:none; background:var(--accent); } }
+      .navigation-loading { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:24px; background:var(--canvas); } .navigation-loading .work-state { width:min(100%,480px); grid-template-columns:76px minmax(0,1fr); margin:0; border:1px solid var(--line); border-radius:var(--radius-panel); background:var(--surface); } @media (max-width:520px) { .navigation-loading .work-state { grid-template-columns:48px minmax(0,1fr); } }
+      #preparation-details { order:2; margin:10px 0 0; }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#learning-workspace">Skip to learning workspace</a>
+    <main>
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true"><!-- Blocks artwork: Lucide Icons and Contributors (ISC); see NOTICE and third_party/licenses/lucide.txt for source, copyright and license. -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"/><rect x="14" y="2" width="8" height="8" rx="1"/></svg></span><span class="brand-copy"><span>Codebase Trail</span><small>Understand the code. Keep up with the changes.</small></span></div><a href="/settings">Settings</a>
+      </header>
+      <nav class="primary-nav" aria-label="Codebase Trail sections" role="tablist">
+        <button id="practice-tab" class="nav-tab" type="button" role="tab" aria-selected="true" aria-controls="practice-view">Practice</button>
+        <button id="history-tab" class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="history-view" tabindex="-1">History <span id="history-nav-count" class="nav-count">0</span></button>
+      </nav>
+      <section id="practice-view" class="view" role="tabpanel" aria-labelledby="practice-tab">
+        <header class="intro view-heading">
+          <div class="intro-copy">
+            <h1 id="page-heading">Learn from code you shipped</h1>
+            <p class="sub">Turn a recent change or an architecture boundary into one focused question.</p>
+          </div>
+        </header>
+        <details class="runtime-panel">
+          <summary>Runtime, privacy, and storage</summary>
+          <section class="runtime-strip" aria-label="Runtime and privacy status">
+            <div class="runtime-cell"><span class="runtime-label">Question generator</span><span id="provider-status" class="runtime-value"><span class="status-dot"></span>Checking configuration...</span></div>
+            <div class="runtime-cell"><span class="runtime-label">Quality reviewer</span><span id="reviewer-status" class="runtime-value">Checking configuration...</span></div>
+            <div class="runtime-cell"><span class="runtime-label">Privacy boundary</span><span id="privacy-status" class="runtime-value">Source handling is being verified</span></div>
+            <div class="runtime-actions"><span class="badge neutral">Revision-pinned evidence</span></div>
+          </section>
+          <p class="grounding-note">Questions use code from exact revisions. If the available evidence cannot support a claim, the app does not publish the question.</p>
+        </details>
+        <div id="learning-workspace" class="workspace">
+          <div class="workspace-main">
+            <section class="bar" aria-labelledby="generation-heading">
+              <div class="bar-header"><div class="bar-copy"><h2 id="generation-heading" class="bar-heading">Create a question</h2><p class="meta">Choose the code boundary. Question depth varies automatically.</p></div></div>
+              <div class="control-grid">
+                <div class="control"><label for="scope">What to learn</label><select id="scope"><option value="pr">Pull request mental model</option><option value="lld">LLD: component design</option><option value="service">Service dependencies</option><option value="hld">HLD: repository topology</option></select><span class="helper">Move from one change to broader system structure.</span></div>
+                <div id="practice-control" class="control"><label for="selection">Which work to use</label><select id="selection"><option value="unseen_recent">Recent unseen work</option><option value="spaced_recall">Review older work</option><option value="newest">Newest eligible pull request</option></select><span class="helper">Avoid repeats or intentionally revisit older work.</span></div>
+                <div id="anchor-control" class="control hidden"><label for="anchor">Where to focus</label><select id="anchor"><option value="">All eligible boundaries</option></select><span class="helper">Narrow architecture questions to one project or deployable service.</span></div>
+              </div>
+              <div class="generate-footer">
+                <div class="source-row"><span class="source-label">Evidence</span><span id="source-preview" class="meta">Finding eligible evidence...</span></div>
+                <div class="bar-actions"><button class="secondary hidden" id="cancel-generation">Cancel</button><button class="primary" id="generate" aria-describedby="source-preview" disabled>Generate question</button></div>
+              </div>
+            </section>
+            <div id="status" class="notice" role="status" aria-live="polite" aria-atomic="false">Connecting to the configured source provider...</div>
+            <details id="preparation-details" class="hidden"><summary>Preparation details</summary><p id="preparation-summary" class="meta"></p></details>
+            <section id="question-empty" class="question-empty" aria-labelledby="question-empty-title"><h2 id="question-empty-title">Your question will appear here</h2><p>Once the evidence is ready, generate a question and answer it before opening the explanation.</p></section>
+            <section id="item" class="card hidden" aria-label="Generated learning question" tabindex="-1"></section>
+          </div>
+        </div>
+      </section>
+      <section id="history-view" class="view hidden" role="tabpanel" aria-labelledby="history-tab">
+        <header class="view-heading"><h1>Review your learning</h1><p class="sub">Open an attempt to compare your answer, revisit the explanation, and decide what needs another pass.</p></header>
+        <p id="history-storage-status" class="notice error hidden" role="status" aria-live="polite"></p>
+        <div class="history-layout">
+          <section class="card history-panel" aria-labelledby="history-heading">
+            <div class="history-head"><div><h2 id="history-heading">Attempts</h2><p id="history-count" class="meta" aria-live="polite">0 attempts</p></div></div>
+            <div class="history-controls">
+              <div><label for="history-search">Search attempts</label><input id="history-search" type="search" placeholder="Search questions or sources" autocomplete="off" /></div>
+              <div><label for="history-filter">Filter by outcome</label><select id="history-filter"><option value="all">All outcomes</option><option value="review">Needs review</option><option value="correct">Correct</option><option value="revealed">Revealed</option></select></div>
+            </div>
+            <div id="history-empty" class="empty-state"><strong>No attempts yet</strong>Answer a question or reveal its answer to start your review history.</div>
+            <ol id="history-list" class="history-list" aria-live="polite"></ol>
+            <div class="history-tools">
+              <input id="import-history" class="hidden" type="file" accept="application/json,.json" />
+              <button class="secondary" id="import-history-button" type="button">Import history</button>
+              <button class="secondary" id="export-feedback" disabled>Export history</button>
+            </div>
+            <p id="transfer-status" class="meta" role="status" aria-live="polite"></p>
+          </section>
+          <article id="history-review" class="card history-review" aria-live="polite">
+            <div class="history-review-empty"><h2>Select an attempt</h2><p>Its answer, explanation, and your feedback will appear here.</p></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <div id="navigation-loading" class="navigation-loading hidden" role="status" aria-live="polite">
+      <div class="work-state"><div class="work-art" aria-hidden="true"><span>{ }</span></div><div class="work-copy"><h3 class="work-title">Opening Settings</h3><p>Loading your saved preferences and checking setup…</p></div></div>
+    </div>
+    <script type="module" nonce="__CODE_LEARNING_CSP_NONCE__">
+      import { architectureEvidenceView, architectureOutcome, compactArchitectureEvidence, formatCoverageCount, generationRejectionOutcome, historyView, learnerSafeHistoryText, mergeHistoryRecords, parseHistoryImport, runtimeStatus, storeFeedback, timingSummary } from './ui-logic.mjs';
+      const $ = (s) => document.querySelector(s); const feedbackStorageKey = 'codebase-trail-feedback-v1'; const seenQuestionStorageKey = 'codebase-trail-seen-questions-v1'; const CANDIDATE_TIMEOUT_MS = 125_000; let generated; let selected; let revealed = false; let candidateList = []; let architectureCatalog; let debugCandidate; let viewer = 'unknown'; let generatedAt; let feedbackSelections = {}; let persistenceQueue = Promise.resolve(); let generationTimer; let generationController; let candidateLoadTimer; let candidateLoading = true; let architectureLoading = true; let generating = false; let candidateError = ''; let statusOwner = 'source'; let prefetchAvailable = true; const prefetchedArchitecture = new Map(); const warmingArchitecture = new Map(); const sessionPrNumbers = new Set(); let exposure = {};
+      const esc = (text) => String(text).replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[char]);
+      const apiToken = '__CODE_LEARNING_API_TOKEN__';
+      const apiFetch = (url, options = {}) => fetch(url, { ...options, headers: { ...(options.headers || {}), 'x-code-learning-token': apiToken } });
+      let historyRecordMap = new Map(); let activeHistoryId; let historyQuery = ''; let historyFilter = 'all';
+      async function apiFetchWithDeadline(url, options = {}, timeoutMs = CANDIDATE_TIMEOUT_MS) { const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), timeoutMs); try { return await apiFetch(url, { ...options, signal: controller.signal }); } finally { clearTimeout(timer); } }
+      const sourceIndex = () => Object.fromEntries((generated.inputSources || []).map((source) => [source.source_id, source]));
+      function savedFeedback() { try { const records = JSON.parse(localStorage.getItem(feedbackStorageKey) || '[]'); return Array.isArray(records) ? records : []; } catch { return []; } }
+      function savedSeenQuestions() { try { const entries = JSON.parse(localStorage.getItem(seenQuestionStorageKey) || '[]'); return Array.isArray(entries) ? entries.filter((entry) => typeof entry?.question === 'string' && entry.question.length <= 700).slice(-100) : []; } catch { return []; } }
+      let seenQuestions = savedSeenQuestions();
+      function rememberQuestion(scope, question, prNumber) { if (!question) return; seenQuestions = [...seenQuestions.filter((entry) => entry.scope !== scope || entry.question !== question), { scope, question, pr_number: prNumber || null }].slice(-100); try { localStorage.setItem(seenQuestionStorageKey, JSON.stringify(seenQuestions)); } catch { /* Session memory still prevents a repeat. */ } }
+      function priorQuestionTexts(scope) { return [...new Set([...savedFeedback().filter((record) => record.source_scope === scope).map((record) => record.generation?.question?.question?.text), ...seenQuestions.filter((entry) => entry.scope === scope).map((entry) => entry.question)].filter(Boolean))].slice(-20); }
+      function setView(view, focus = false) { const practice = view === 'practice'; $('#practice-view').classList.toggle('hidden', !practice); $('#history-view').classList.toggle('hidden', practice); $('#practice-tab').setAttribute('aria-selected', String(practice)); $('#history-tab').setAttribute('aria-selected', String(!practice)); $('#practice-tab').tabIndex = practice ? 0 : -1; $('#history-tab').tabIndex = practice ? -1 : 0; if (focus) (practice ? $('#practice-tab') : $('#history-tab')).focus(); }
+      function showQuestionEmpty(title = 'Your question will appear here', copy = 'Once the evidence is ready, generate a question and answer it before opening the explanation.') { $('#question-empty-title').textContent = title; $('#question-empty p').textContent = copy; $('#question-empty').classList.remove('hidden', 'is-working'); }
+      function clearCurrentQuestion() {
+        generated = undefined; generatedAt = undefined; selected = undefined; revealed = false; feedbackSelections = {}; exposure = {};
+        $('#item').replaceChildren(); $('#item').classList.add('hidden'); $('#preparation-details').classList.add('hidden'); showQuestionEmpty();
+      }
+      function historyChoice(option, index) { return typeof option === 'string' ? { id:String.fromCharCode(65 + index), text:option } : { id:String(option?.id || String.fromCharCode(65 + index)), text:String(option?.text || option?.label || 'Answer option') }; }
+      function renderHistoryRecord(id) {
+        const record = historyRecordMap.get(id); if (!record) return;
+        activeHistoryId = id;
+        document.querySelectorAll('.history-entry-button').forEach((button) => button.setAttribute('aria-current', String(decodeURIComponent(button.dataset.historyId) === id)));
+        const item = record.generation?.question || {}; const architectureRecord = !record.source_pr?.number && record.source_scope !== 'pr';
+        const legacyArchitectureRecord = architectureRecord && record.generation?.contract !== 'architecture-question-v4';
+        const safeHistoryText = (value) => learnerSafeHistoryText(value, { architecture: architectureRecord, legacy: legacyArchitectureRecord });
+        const options = (Array.isArray(item.answer_options) ? item.answer_options : []).map(historyChoice).map((option) => ({ ...option, text: safeHistoryText(option.text) }));
+        const selectedId = record.learner_answer?.selected_option_id || null; const correctId = record.learner_answer?.correct_option_id || item.correct_option_id || null;
+        const selectedText = record.learner_answer?.selected_option_text || options.find((option) => option.id === selectedId)?.text || (record.learner_answer?.revealed_without_answer ? 'Revealed without answering' : 'Not recorded');
+        const correctText = record.learner_answer?.correct_option_text || options.find((option) => option.id === correctId)?.text || 'Not available';
+        const explanation = safeHistoryText(Array.isArray(item.explanation_claims) ? item.explanation_claims.map((claim) => claim?.text).filter(Boolean).join(' ') : item.explanation);
+        const source = record.source_pr?.number ? `PR #${record.source_pr.number}${record.source_pr.title ? `: ${record.source_pr.title}` : ''}` : String(record.source_scope || 'Architecture').toUpperCase();
+        const sourceMarkup = record.source_pr?.url ? `<a href="${esc(record.source_pr.url)}" target="_blank" rel="noreferrer">${esc(source)}</a>` : esc(source);
+        const result = record.learner_answer?.was_correct === true ? 'Correct' : record.learner_answer?.was_correct === false ? 'Needs review' : 'Answer revealed';
+        const optionMarkup = options.length ? `<ul class="review-options">${options.map((option) => { const markers = [option.id === selectedId ? 'Your answer' : '', option.id === correctId ? 'Correct' : ''].filter(Boolean).join(' / '); return `<li class="review-option${option.id === selectedId ? ' selected' : ''}${option.id === correctId ? ' correct' : ''}"><span class="review-option-label">${esc(option.id)}</span><span>${esc(option.text)}</span><span class="review-marker">${esc(markers)}</span></li>`; }).join('')}</ul>` : `<div class="review-options"><p><strong>Your answer:</strong> ${esc(selectedText)}</p><p><strong>Correct answer:</strong> ${esc(correctText)}</p></div>`;
+        const feedback = record.feedback || {}; const feedbackParts = [feedback.learning_outcome, feedback.helpfulness ? `Helpful: ${feedback.helpfulness}` : '', feedback.relevance ? `Relevant: ${feedback.relevance}` : '', ...(feedback.limiting_reasons || []).map((reason) => String(reason).replaceAll('_', ' ')), feedback.subjective].filter(Boolean);
+        $('#history-review').innerHTML = `<div class="review-kicker"><span>${sourceMarkup}</span>${item.learning_level ? `<span class="badge neutral learning-level">${esc(item.learning_level)}</span>` : ''}<span>${record.saved_at ? esc(new Date(record.saved_at).toLocaleString()) : 'Date unavailable'}</span><span class="history-status ${result === 'Needs review' ? 'review' : ''}">${esc(result)}</span></div><h2 class="review-question">${esc(safeHistoryText(item.question?.text || item.question || 'Untitled learning item'))}</h2>${optionMarkup}<section class="review-explanation"><h3>Explanation</h3><p>${esc(explanation || 'This imported record does not include an explanation.')}</p>${item.answer_analysis?.text ? `<p><strong>Why the alternatives fail:</strong> ${esc(safeHistoryText(item.answer_analysis.text))}</p>` : ''}</section><section class="review-feedback"><h3>Your notes</h3><p>${feedbackParts.length ? esc(feedbackParts.join(' / ')) : 'No feedback was saved for this attempt.'}</p></section>`;
+      }
+      function refreshHistory() {
+        const records = mergeHistoryRecords([], savedFeedback()); const entries = historyView(records); historyRecordMap = new Map(entries.map((entry, index) => [entry.id, records[index]]));
+        const query = historyQuery.trim().toLocaleLowerCase(); const statusByFilter = { review:'Review', correct:'Correct', revealed:'Revealed' };
+        const filteredEntries = entries.filter((entry) => (!query || `${entry.question} ${entry.source}`.toLocaleLowerCase().includes(query)) && (historyFilter === 'all' || entry.status === statusByFilter[historyFilter]));
+        $('#history-count').textContent = filteredEntries.length === entries.length ? `${entries.length} attempt${entries.length === 1 ? '' : 's'}` : `Showing ${filteredEntries.length} of ${entries.length} attempts`; $('#history-nav-count').textContent = entries.length;
+        const empty = $('#history-empty'); empty.classList.toggle('hidden', filteredEntries.length > 0); empty.innerHTML = entries.length ? '<strong>No matching attempts</strong>Try a different search or outcome filter.' : '<strong>No attempts yet</strong>Answer a question or reveal its answer to start your review history.';
+        $('#history-list').innerHTML = filteredEntries.map((entry) => `<li class="history-entry"><button type="button" class="history-entry-button" data-history-id="${esc(encodeURIComponent(entry.id))}" aria-current="${entry.id === activeHistoryId}"><span class="history-meta"><span>${esc(entry.source)}</span><span>${entry.saved_at ? esc(new Date(entry.saved_at).toLocaleDateString()) : 'Date unavailable'}</span></span><span class="history-question">${esc(entry.question)}</span><span class="history-status ${entry.status === 'Review' ? 'review' : ''}">${esc(entry.status === 'Review' ? 'Needs review' : entry.status)}</span></button></li>`).join('');
+        if (!filteredEntries.length) { activeHistoryId = undefined; $('#history-review').innerHTML = `<div class="history-review-empty"><h2>${entries.length ? 'No matching attempts' : 'Select an attempt'}</h2><p>${entries.length ? 'Change the search or filter to continue reviewing.' : 'Its answer, explanation, and your feedback will appear here.'}</p></div>`; }
+        else renderHistoryRecord(filteredEntries.some((entry) => entry.id === activeHistoryId) ? activeHistoryId : filteredEntries[0].id);
+      }
+      function refreshExportButton() { const count = savedFeedback().length; const button = $('#export-feedback'); button.textContent = 'Export history'; button.disabled = !count; refreshHistory(); }
+      function bindOptionInteractions() { const options = [...document.querySelectorAll('.option')]; options.forEach((button, index) => { button.setAttribute('role', 'radio'); button.setAttribute('aria-checked', 'false'); button.addEventListener('click', () => { if (revealed) return; options.forEach((node) => { node.classList.remove('selected'); node.setAttribute('aria-checked', 'false'); }); button.classList.add('selected'); button.setAttribute('aria-checked', 'true'); selected = button.dataset.option; $('#submit').disabled = false; }); button.addEventListener('keydown', (event) => { if (!['ArrowDown','ArrowRight','ArrowUp','ArrowLeft'].includes(event.key)) return; event.preventDefault(); const delta = ['ArrowDown','ArrowRight'].includes(event.key) ? 1 : -1; options[(index + delta + options.length) % options.length].focus(); }); }); $('#options')?.setAttribute('role', 'radiogroup'); $('#options')?.setAttribute('aria-label', 'Answer choices'); }
+      function startWork(kind) {
+        const status = $('#status'); statusOwner = kind; status.className = 'notice loading';
+        status.innerHTML = '<div class="work-state"><div class="work-art" aria-hidden="true"><span>?</span></div><div class="work-copy"><h3 class="work-title"></h3><p class="work-detail"></p></div><span class="work-clock" aria-hidden="true"></span></div>';
+        const art = status.querySelector('.work-art span'); art.textContent = kind === 'source' ? '↗' : '◆';
+        let previousCopy = '';
+        return (elapsed) => {
+          if (statusOwner !== kind) return;
+          const copy = kind === 'source'
+            ? elapsed < 10 ? ['Finding your recent changes', 'Checking the configured source for eligible merged pull requests.'] : elapsed < 60 ? ['Still checking the source', 'Repository access can take a little longer. Your GitHub sign-in and permissions are being checked.'] : ['Waiting for GitHub', 'Discovery is still running. You can retry if the connection does not recover.']
+            : elapsed < 12 ? ['Building a grounded question', 'Gathering code evidence and preparing it for your model.'] : elapsed < 35 ? ['Working through the evidence', 'The model may need time to draft and review a question against the source.'] : elapsed < 90 ? ['Giving the model room to reason', 'Larger code boundaries and remote models can take a minute or two.'] : ['Still working on your question', 'The request is active. You can cancel it at any time.'];
+          const nextCopy = copy.join('|');
+          if (nextCopy !== previousCopy) { status.querySelector('.work-title').textContent = copy[0]; status.querySelector('.work-detail').textContent = copy[1]; previousCopy = nextCopy; }
+          status.querySelector('.work-clock').textContent = `${Math.floor(elapsed / 60).toString().padStart(2, '0')}:${(elapsed % 60).toString().padStart(2, '0')} elapsed`;
+        };
+      }
+      function syncGenerateAvailability() { const scope = $('#scope').value; $('#generate').disabled = generating || (scope === 'pr' ? candidateLoading || candidateList.length === 0 : architectureLoading || Boolean(architectureCatalog?.error)); }
+      function setGenerating(active) { clearInterval(generationTimer); generating = active; syncGenerateAvailability(); $('#cancel-generation').classList.toggle('hidden', !active); $('#scope').disabled = active; $('#anchor').disabled = active; $('#selection').disabled = active || Boolean(debugCandidate); if (active) { const startedAt = Date.now(); const showWork = startWork('question'); const showProgress = () => showWork(Math.floor((Date.now() - startedAt) / 1000)); showProgress(); generationTimer = setInterval(showProgress, 1_000); } else { generationController = undefined; refreshExportButton(); } }
+      function selectLocalPracticeAfterPrFailure() { if ($('#scope').value !== 'pr' || generating) return false; $('#scope').value = 'lld'; updateSourcePreview(); $('.source-row').classList.toggle('indexing', !architectureCatalog); if (architectureCatalog) void prefetchEligibleArchitecture('lld'); return true; }
+      function citations(field) { const ids = field.citations.source_ids; const sources = sourceIndex(); return ids.map((id) => { const source = sources[id]; return `<li><span>${esc(source?.path_or_url || id)}</span>${source?.url ? `<a target="_blank" rel="noreferrer" href="${esc(source.url)}">View source ↗</a>` : '<span>Local evidence note</span>'}</li>`; }).join(''); }
+      function renderItem(item) {
+        const type = item.question_type.replaceAll('_', ' '); const format = (item.question_format || 'mental_model').replaceAll('_', ' ');
+        const pr = generated.evidence.pr; const contextText = item.context?.text || item.scenario?.text || `This question is grounded in the change “${pr.title}”. Use the implementation consequence, not the PR number, to reason about the answer.`; const mentalModelText = typeof item.mental_model === 'string' ? item.mental_model : item.mental_model?.text; const exampleText = item.mental_model?.scenario || item.example?.text || item.concrete_example?.text; const reviewLabel = item.review_stage ? item.review_stage.replaceAll('_', ' ') : exposure.isReview ? `Review, exposure ${exposure.count}` : 'First exposure';
+        $('#item').innerHTML = `<div class="eyebrow">${esc(type)} / ${esc(format)} <span class="badge neutral learning-level">${esc(item.learning_level)}</span></div><div class="context"><div class="context-title"><a target="_blank" rel="noreferrer" href="${esc(pr.url)}">PR #${pr.number}: ${esc(pr.title)}</a> <span class="badge">${esc(reviewLabel)}</span></div><div>${esc(contextText)}</div></div>${mentalModelText ? `<div class="example"><strong>Mental model</strong><br>${esc(mentalModelText)}</div>` : ''}<div class="payoff"><strong>Why this matters now</strong><br>${esc(item.immediate_work_payoff.text)}</div>${exampleText ? `<div class="example"><strong>Concrete scenario</strong><br>${esc(exampleText)}</div>` : ''}<h2>${esc(item.question.text)}</h2><div id="options">${item.answer_options.map((option) => `<button class="option" data-option="${option.id}"><span class="letter">${option.id}</span><span>${esc(option.text)}</span></button>`).join('')}</div><div class="actions"><button id="show" class="secondary">Show answer</button><button id="submit" class="primary" disabled>Submit answer</button></div><div id="reveal" class="hidden"></div><details><summary>Evidence and implementation context</summary><ul class="sources">${citations(item.question)}${item.context?.citations ? citations(item.context) : ''}</ul></details>`;
+        $('#question-empty').classList.add('hidden');
+        $('#item').classList.remove('hidden');
+        bindOptionInteractions();
+        $('#show').addEventListener('click', reveal); $('#submit').addEventListener('click', reveal); $('#item').focus();
+      }
+      function architectureEvidenceDisclosure() {
+        const view = architectureEvidenceView(generated?.architecture || {});
+        const relationshipRows = view.relationships.map((relationship) => `<li><span><strong>${esc(relationship.label)}</strong><br>${esc(relationship.kind)}</span><span>${esc(relationship.files.map(({ label }) => label).join(', ') || 'Verified repository source')}</span></li>`).join('');
+        const pathNote = view.path_count ? `<p class="meta">${formatCoverageCount(view.path_count)} complete dependency path${view.path_count === 1 ? '' : 's'} verified across these relationships.</p>` : '';
+        return `<details class="evidence-disclosure"><summary>Sources used to verify this explanation <span class="evidence-count">${view.file_count} file${view.file_count === 1 ? '' : 's'}</span></summary><p class="meta">${esc(view.revision_copy)}</p>${pathNote}<ul class="sources">${relationshipRows}</ul></details>`;
+      }
+      function renderArchitectureItem(item) {
+        const scope = item.scope.toUpperCase();
+        $('#item').innerHTML = `<div class="eyebrow">${esc(scope)} / ${esc(item.question_type.replaceAll('_', ' '))} <span class="badge neutral learning-level">${esc(item.learning_level)}</span></div><div class="context"><div class="context-title">Repository architecture <span class="badge">${esc(item.scope)} scope</span></div><div>${esc(item.context)}</div></div><div class="example"><strong>Mental model</strong><br>${esc(item.mental_model)}</div><div class="payoff"><strong>What this is based on</strong><br>Source-backed relationships from pinned repository revisions.</div><h2>${esc(item.question)}</h2><div id="options">${item.answer_options.map((option) => `<button class="option" data-option="${option.id}"><span class="letter">${option.id}</span><span>${esc(option.text)}</span></button>`).join('')}</div><div class="actions"><button id="show" class="secondary">Show answer</button><button id="submit" class="primary" disabled>Submit answer</button></div><div id="reveal" class="hidden"></div>`;
+        $('#question-empty').classList.add('hidden');
+        $('#item').classList.remove('hidden');
+        bindOptionInteractions();
+        $('#show').addEventListener('click', reveal); $('#submit').addEventListener('click', reveal); $('#item').focus();
+      }
+      function reveal() {
+        if (revealed) return; revealed = true; const item = generated.output.item; const chosen = selected ? `You selected ${selected}. ` : 'You chose to reveal the answer. '; const correct = selected === item.correct_option_id; document.querySelectorAll('.option').forEach((button) => { button.disabled = true; if (button.dataset.option === item.correct_option_id) button.style.cssText = 'border-color:var(--good);background:var(--good-soft)'; else if (button.dataset.option === selected) button.style.cssText = 'border-color:var(--bad);background:var(--bad-soft)'; });
+        rememberQuestion(generated.mode === 'architecture' ? item.scope : 'pr', item.question?.text || item.question, generated.evidence?.pr?.number);
+        $('#show').disabled = true; $('#submit').disabled = true;
+        const explanation = item.explanation_claims ? item.explanation_claims.map((claim) => `<p>${esc(claim.text)}</p>`).join('') : `<p>${esc(item.explanation)}</p>`; const concepts = item.expected_concepts || [{ text: item.mental_model_kind }, { text: `${item.scope} architecture` }];
+        const evidenceDisclosure = generated.mode === 'architecture' ? architectureEvidenceDisclosure() : '';
+        $('#reveal').classList.remove('hidden'); $('#reveal').innerHTML = `<div class="answer ${correct ? 'correct' : 'incorrect'}"><h3>${correct ? 'Correct' : 'Answer revealed'}: ${item.correct_option_id}</h3><p>${esc(chosen)}${esc(item.answer_options.find((option) => option.id === item.correct_option_id).text)}</p></div><div class="answer"><h3>Build the mental model</h3>${explanation}${item.answer_analysis?.text ? `<p><strong>Why the alternatives fail:</strong> ${esc(item.answer_analysis.text)}</p>` : ''}<h3>Key concepts</h3><div class="concepts">${concepts.map((concept) => `<span class="concept">${esc(concept.text)}</span>`).join('')}</div>${evidenceDisclosure}</div><details class="feedback"><summary>Optional feedback</summary><p class="meta">Your answer is already in History. Feedback is saved with this attempt for your review and export; it does not currently change question generation.</p>${feedbackRow('learning_outcome', 'What happened for you?', ['Learned something new','Strengthened my mental model','Already knew this','Still unclear'])}${feedbackRow('helpfulness', 'Did it help your understanding?')}${feedbackRow('relevance', 'Was it relevant to your work?')}<div id="reason-panel" class="reason-panel"><label>Question-quality flags (select any)</label>${feedbackReasons().map(([value, label]) => `<button data-reason="${value}">${label}</button>`).join('')}</div><label class="feedback-notes" for="subjective-feedback">Anything else useful, unclear, or missing?</label><textarea id="subjective-feedback" maxlength="4000" placeholder="For example: show the before/after execution path and the contract boundary."></textarea><button id="save-feedback" class="primary">Save feedback locally</button><p id="save-note" class="save-note hidden"></p></details>`;
+        $('#save-feedback').addEventListener('click', () => void saveFeedback(false));
+        $('#status').textContent = 'Answer recorded in History. You can add optional feedback below.';
+        void saveFeedback(true);
+      }
+      function feedbackRow(id, prompt, values = ['Yes','Somewhat','No']) { return `<div class="feedback-row"><label>${prompt}</label>${values.map((value) => `<button data-feedback="${id}" data-value="${value}">${value}</button>`).join('')}</div>`; }
+      function feedbackReasons() { return [['already_knew','Already knew it'],['insufficient_context','Insufficient context'],['unclear_explanation','Explanation unclear'],['multiple_correct','Multiple answers seem correct'],['answer_wrong','Answer key seems wrong'],['too_detailed','Too detailed'],['too_trivial','Too trivial'],['not_mental_model','Tests recall, not a mental model']]; }
+      async function saveFeedback(automatic = false) {
+        const item = generated?.output?.item; if (!item || !revealed) return;
+        const answer = item.answer_options.find((option) => option.id === item.correct_option_id);
+        const response = selected ? item.answer_options.find((option) => option.id === selected) : null;
+        const record = {
+          record_version: 'codebase-trail-feedback-v2', record_id: `${generated.mode === 'architecture' ? generated.architecture.graph_build_id : generated.evidence.pr.number}-${generatedAt}`,
+          saved_at: new Date().toISOString(), generated_at: generatedAt, user: { github_login: viewer },
+          source_scope: generated.mode === 'architecture' ? item.scope : 'pr', source_pr: generated.evidence?.pr || null, generation: { model: generated.model || 'configured-model', usage: generated.usage || null, contract: generated.mode === 'architecture' ? 'architecture-question-v4' : 'pr-question-v1', question: item },
+          learner_answer: { selected_option_id: selected || null, selected_option_text: response?.text || null, correct_option_id: item.correct_option_id, correct_option_text: answer?.text || null, was_correct: selected ? selected === item.correct_option_id : null, revealed_without_answer: !selected },
+          feedback: automatic ? {} : { subjective: $('#subjective-feedback')?.value.trim() || '', helpfulness: feedbackSelections.helpfulness || null, relevance: feedbackSelections.relevance || null, learning_outcome: feedbackSelections.learning_outcome || null, limiting_reasons: feedbackSelections.reasons || [] },
+          exposure: { is_first_exposure: item.review_stage !== 'intentional_review', exposure_number: exposure.count || 1, intentional_review: item.review_stage === 'intentional_review', selection_strategy: generated.mode === 'architecture' ? 'architecture_scope' : $('#selection').value },
+          evidence: generated.mode === 'architecture' ? compactArchitectureEvidence(generated.architecture, item) : { source_count: generated.evidence.source_count, exclusions: generated.evidence.exclusions, sources: generated.inputSources },
+        };
+        const records = mergeHistoryRecords(savedFeedback(), [record]);
+        const persisted = storeFeedback(localStorage, feedbackStorageKey, records);
+        if (!persisted.ok) { $('#save-note').textContent = persisted.reason === 'storage_quota_exceeded' ? 'Could not save: this browser’s local history storage is full. Export existing history, then clear it before trying again.' : automatic ? 'Could not save this answer in browser history. Check that local storage is enabled and try again.' : 'Could not save feedback in this browser. Check that local storage is enabled and try again.'; $('#save-note').style.color = 'var(--bad)'; $('#save-note').classList.remove('hidden'); $('#status').className = 'notice error'; $('#status').textContent = automatic ? 'Answer was not saved in browser history.' : 'Feedback was not saved locally.'; return; }
+        refreshExportButton(); if (!automatic) $('#save-note').style.color = '';
+        const saveDurably = async () => { const durable = await apiFetch('/api/history/import', { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ records:[record] }) }); if (!durable.ok) throw new Error('durable store rejected record'); };
+        persistenceQueue = persistenceQueue.catch(() => {}).then(saveDurably);
+        try {
+          await persistenceQueue;
+          if (generatedAt !== record.generated_at) return;
+          if (!automatic) { $('#save-note').textContent = 'Feedback updated in durable local history. Use Export when you are ready to share it.'; $('#save-note').style.color = ''; }
+        } catch {
+          if (generatedAt !== record.generated_at) return;
+          $('#save-note').textContent = 'Saved in this browser, but the durable local store was unavailable. Export a backup before clearing browser data.';
+          $('#save-note').style.color = 'var(--warn)';
+          $('#save-note').classList.remove('hidden');
+        }
+        if (!automatic) $('#save-note').classList.remove('hidden');
+      }
+      async function exportFeedback() {
+        const records = savedFeedback(); if (!records.length) return;
+        const button = $('#export-feedback'); button.disabled = true;
+        try {
+          const response = await apiFetch('/api/export-feedback', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ records }) });
+          if (!response.ok) { const body = await response.json(); throw new Error(body.error || 'Feedback export failed.'); }
+          const blob = await response.blob(); const href = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = href; link.download = `codebase-trail-feedback-${new Date().toISOString().slice(0, 10)}.zip`; link.click(); URL.revokeObjectURL(href);
+          $('#transfer-status').textContent = `Downloaded ${records.length} locally stored feedback record${records.length === 1 ? '' : 's'} as a ZIP.`;
+        } catch (error) { const blob = new Blob([JSON.stringify({ schema_version:'codebase-trail-history-v1', exported_at:new Date().toISOString(), records }, null, 2)], { type:'application/json' }); const href = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = href; link.download = `codebase-trail-history-${new Date().toISOString().slice(0, 10)}.json`; link.click(); URL.revokeObjectURL(href); $('#transfer-status').textContent = `ZIP export unavailable; downloaded ${records.length} item${records.length === 1 ? '' : 's'} as portable JSON.`; } finally { refreshExportButton(); }
+      }
+      async function importHistory(file) {
+        if (!file) return; $('#transfer-status').textContent = 'Checking import…';
+        try {
+          const parsed = parseHistoryImport(await file.text());
+          if (!parsed.ok) throw new Error(`Import rejected: ${parsed.reason.replaceAll('_', ' ')}.`);
+          const response = await apiFetch('/api/history/import', { method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ records:parsed.records }) });
+          if (!response.ok) throw new Error('Durable history import was rejected.');
+          const merged = mergeHistoryRecords(savedFeedback(), parsed.records);
+          const persisted = storeFeedback(localStorage, feedbackStorageKey, merged);
+          if (!persisted.ok) throw new Error('Answers were imported, but explanations could not be saved in this browser. Keep the import file and retry.');
+          refreshExportButton();
+          $('#transfer-status').textContent = `Imported ${parsed.records.length} item${parsed.records.length === 1 ? '' : 's'}; ${merged.length} unique item${merged.length === 1 ? '' : 's'} stored locally${parsed.rejected_count ? ` (${parsed.rejected_count} invalid skipped)` : ''}.`;
+        } catch (error) { $('#transfer-status').textContent = error.message; } finally { $('#import-history').value = ''; }
+      }
+      async function loadRuntimeStatus() { try { const response = await apiFetchWithDeadline('/api/status', {}, 8_000); if (!response.ok) throw new Error('Unavailable'); const body = await response.json(); const value = runtimeStatus(body); $('#provider-status').innerHTML = `<span class="status-dot ${value.available ? 'ready' : ''}"></span>${esc(value.generator)}`; $('#reviewer-status').textContent = value.reviewer; $('#privacy-status').textContent = value.privacy; return body.source_provider?.name; } catch { $('#provider-status').innerHTML = '<span class="status-dot"></span>Server connected · provider undisclosed'; $('#reviewer-status').textContent = 'Reviewer undisclosed'; $('#privacy-status').textContent = 'Review server configuration before sharing private source'; return null; } }
+      document.addEventListener('click', (event) => { const button = event.target.closest('[data-feedback], [data-reason]'); if (!button) return; if (button.dataset.reason) { const reasons = new Set(feedbackSelections.reasons || []); reasons.has(button.dataset.reason) ? reasons.delete(button.dataset.reason) : reasons.add(button.dataset.reason); feedbackSelections.reasons = [...reasons]; button.classList.toggle('active'); return; } document.querySelectorAll(`[data-feedback="${button.dataset.feedback}"]`).forEach((node) => node.classList.remove('active')); button.classList.add('active'); feedbackSelections[button.dataset.feedback] = button.dataset.value; });
+      async function loadCandidates() {
+        const status = $('#status');
+        const startedAt = Date.now(); clearInterval(candidateLoadTimer); candidateLoading = true; candidateError = ''; candidateList = []; syncGenerateAvailability(); const showWork = statusOwner === 'source' ? startWork('source') : () => {};
+        const showCandidateProgress = () => showWork(Math.floor((Date.now() - startedAt) / 1000));
+        showCandidateProgress(); candidateLoadTimer = setInterval(showCandidateProgress, 1_000);
+        try {
+          const response = await apiFetchWithDeadline('/api/candidates'); const body = await response.json(); if (!response.ok) throw new Error(body.error || 'Could not load pull requests.');
+          if (!body.candidates.length) { candidateError = `No merged PRs authored by ${body.login} were found in ${body.repository}.`; const switched = selectLocalPracticeAfterPrFailure(); if (statusOwner === 'source') { status.className = 'notice'; status.textContent = `${candidateError}${switched ? ' Switched to local component design questions.' : ''}`; } updateSourcePreview(); return; }
+          viewer = body.login; candidateList = body.candidates;
+          const debugPr = Number(new URLSearchParams(location.search).get('pr'));
+          debugCandidate = body.candidates.find((pr) => pr.number === debugPr);
+          if (debugCandidate) { $('#selection').value = 'newest'; $('#selection').disabled = true; $('#source-preview').textContent = `Debug source: PR #${debugCandidate.number} · ${debugCandidate.title}`; }
+          else updateSourcePreview();
+          if (statusOwner === 'source') { status.className = 'notice'; status.textContent = `Ready as ${body.login}. Found ${body.candidates.length} eligible merged PR${body.candidates.length === 1 ? '' : 's'} in ${body.repository} after ${Math.max(1, Math.ceil((Date.now() - startedAt) / 1000))}s.`; }
+        } catch (error) { const timedOut = error.name === 'AbortError'; candidateError = timedOut ? 'GitHub PR discovery timed out. Check GitHub access in Settings, then retry.' : error.message; const switched = selectLocalPracticeAfterPrFailure(); if (statusOwner === 'source') { status.className = 'notice error'; status.innerHTML = `${esc(candidateError)}${switched ? ' Switched to local component design questions.' : ''} <a href="/settings">Check GitHub setup</a> <button class="secondary retry-button" id="retry-candidates">Retry PRs</button>`; $('#retry-candidates').addEventListener('click', loadCandidates); } updateSourcePreview(); }
+        finally { clearInterval(candidateLoadTimer); candidateLoading = false; updateSourcePreview(); }
+      }
+      async function loadArchitectureCatalog() {
+        const startedAt = Date.now(); let progressTimer; architectureLoading = true; syncGenerateAvailability();
+        $('.source-row').classList.toggle('indexing', $('#scope').value !== 'pr');
+        const showProgress = () => { if ($('#scope').value !== 'pr' && !architectureCatalog) $('#source-preview').textContent = `Indexing the local repository for architecture evidence… ${Math.floor((Date.now() - startedAt) / 1000)}s`; };
+        showProgress(); progressTimer = setInterval(showProgress, 1_000);
+        try {
+          const response = await apiFetchWithDeadline('/api/architecture/catalog', {}, 180_000); const body = await response.json(); if (!response.ok) throw new Error(body.error || 'Could not index architecture evidence.'); architectureCatalog = body;
+          $('#anchor').innerHTML = '<option value="">All eligible boundaries</option>' + body.services.filter((service) => service.resolved).map((service) => `<option value="${esc(service.id)}">${esc(service.name)} · ${service.boundary_role === 'deployable' ? 'Service' : 'Project'} · ${esc(service.repository_id)}</option>`).join(''); updateSourcePreview(); if ($('#scope').value !== 'pr') void prefetchEligibleArchitecture($('#scope').value);
+        } catch (error) { architectureCatalog = { error: error.name === 'AbortError' ? 'Architecture indexing timed out after three minutes. Retry by reloading the page.' : error.message, scopes: {}, services: [] }; updateSourcePreview(); }
+        finally { clearInterval(progressTimer); architectureLoading = false; $('.source-row').classList.remove('indexing'); syncGenerateAvailability(); }
+      }
+      const architectureSelections = new Map();
+      const architectureRequest = (scope, anchor = '') => {
+        const request = { scope, learner_node_ids: anchor ? [anchor] : [], prior_questions: priorQuestionTexts(scope) };
+        const key = JSON.stringify(request);
+        if (!architectureSelections.has(key)) architectureSelections.set(key, crypto.randomUUID());
+        return { ...request, selection_id: architectureSelections.get(key) };
+      };
+      const architectureRequestKey = (request) => JSON.stringify(request);
+      const prefetchControllers = new Map();
+      function cancelArchitecturePrefetches(keepKey) {
+        for (const [key, controller] of prefetchControllers) if (key !== keepKey) controller.abort();
+      }
+      async function prefetchEligibleArchitecture(scope) {
+        if (!prefetchAvailable || !architectureCatalog?.scopes?.[scope]?.eligible) return;
+        const request = architectureRequest(scope, $('#anchor').value); const key = architectureRequestKey(request);
+        cancelArchitecturePrefetches(key);
+        if (prefetchedArchitecture.has(key) || warmingArchitecture.has(key)) return;
+        const controller = new AbortController(); prefetchControllers.set(key, controller);
+        try {
+          const warming = (async () => {
+            const response = await apiFetch('/api/architecture/practice/prefetch', { method:'POST', headers:{'content-type':'application/json'}, signal:controller.signal, body:JSON.stringify(request) });
+            if (response.status === 404 || response.status === 405) { prefetchAvailable = false; return; }
+            if (!response.ok || response.status === 202 || response.status === 204) return;
+            const body = await response.json(); if (['published', 'abstained'].includes(body?.status)) prefetchedArchitecture.set(key, { ...body, prefetched:true });
+          })(); warmingArchitecture.set(key, warming);
+          await warming;
+        } catch { return; } finally { warmingArchitecture.delete(key); prefetchControllers.delete(key); }
+      }
+      function awaitWithSignal(promise, signal) {
+        if (!signal) return promise;
+        if (signal.aborted) return Promise.reject(signal.reason || new DOMException('Cancelled', 'AbortError'));
+        return new Promise((resolve, reject) => {
+          const aborted = () => { cleanup(); reject(signal.reason || new DOMException('Cancelled', 'AbortError')); };
+          const cleanup = () => signal.removeEventListener('abort', aborted);
+          signal.addEventListener('abort', aborted, { once:true });
+          promise.then((value) => { cleanup(); resolve(value); }, (error) => { cleanup(); reject(error); });
+        });
+      }
+      function renderAbstention(body, scope) {
+        const outcome = architectureOutcome(body, scope);
+        $('#status').className = 'notice'; $('#status').innerHTML = `<strong>${esc(outcome.title)}.</strong> Evidence reason: ${esc(outcome.reason.replaceAll('_', ' '))}. Claims: <span title="${formatCoverageCount(outcome.claim_count, { exact: true })}">${formatCoverageCount(outcome.claim_count)}</span>; dependency paths: <span title="${formatCoverageCount(outcome.path_count, { exact: true })}">${formatCoverageCount(outcome.path_count)}</span>. No question is shown because the evidence is not sufficient.`;
+      }
+      function renderRejection(body, scope) {
+        const outcome = architectureOutcome(body, scope); const failure = generationRejectionOutcome(body); const details = outcome.validation_errors.length ? `<details><summary>Technical details</summary><ul>${outcome.validation_errors.map((error) => `<li>${esc(error)}</li>`).join('')}</ul></details>` : '';
+        $('#status').className = 'notice error'; $('#status').innerHTML = `<strong>Couldn't create a ${esc(String(scope).toUpperCase())} question.</strong> ${esc(failure.explanation)} ${failure.attempts > 1 ? 'Tried twice.' : ''}${details}<span class="meta">Try again. If this repeats, review the configured model's output and reasoning limits.</span>`;
+      }
+      function renderPreparationDetails(body) {
+        const panel = $('#preparation-details'); const summary = $('#preparation-summary');
+        panel.classList.add('hidden'); summary.textContent = '';
+        if (body.cached) { summary.textContent = 'Saved question loaded; no new model generation was needed.'; panel.classList.remove('hidden'); return; }
+        const labels = { snapshot_ms:'Read repository', analysis_ms:'Analyze relationships', evidence_ms:'Select evidence', generation_ms:'Create question', validation_ms:'Validate evidence', review_ms:'Check answer' };
+        const stages = Object.fromEntries(Object.entries(labels).filter(([key]) => typeof body.timings?.[key] === 'number' && Number.isFinite(body.timings[key]) && body.timings[key] >= 0).map(([key,label]) => [label, body.timings[key]]));
+        const timing = timingSummary({ timings:stages }); if (!timing) return;
+        const attempts = Array.isArray(body.generation_attempts) ? body.generation_attempts : [];
+        const generations = new Set(attempts.map(attempt => attempt.generation_attempt).filter(value => Number.isSafeInteger(value) && value > 0)).size;
+        const reviews = attempts.filter(attempt => ['adversarial_review','adversarial_review_transport'].includes(attempt.stage)).length;
+        summary.textContent = `${body.prefetched ? 'Prepared in the background. ' : ''}${timing}${generations ? ` · Generation attempts: ${generations} · Review attempts: ${reviews}` : ''}`;
+        panel.classList.remove('hidden');
+      }
+      function renderGenerationRejection(body) {
+        const outcome = generationRejectionOutcome(body); const details = outcome.details.length ? `<ul>${outcome.details.map((detail) => `<li>${esc(detail)}</li>`).join('')}</ul>` : '';
+        $('#status').className = 'notice error'; $('#status').innerHTML = `<strong>${esc(outcome.title)}.</strong> ${esc(outcome.explanation)} ${outcome.attempts > 1 ? 'Tried twice.' : ''}${details ? `<details><summary>Technical details</summary>${details}</details>` : ''}<span class="meta">Try again. If this repeats, review the configured model's output and reasoning limits.</span>`;
+      }
+      async function generateArchitecture() {
+        const scope = $('#scope').value; const anchor = $('#anchor').value;
+        const request = architectureRequest(scope, anchor); architectureSelections.delete(JSON.stringify({ scope: request.scope, learner_node_ids: request.learner_node_ids, prior_questions: request.prior_questions })); const key = architectureRequestKey(request); cancelArchitecturePrefetches(key); const cancelWarming = () => prefetchControllers.get(key)?.abort(); generationController.signal.addEventListener('abort', cancelWarming, { once:true }); try { if (warmingArchitecture.has(key)) await awaitWithSignal(warmingArchitecture.get(key), generationController.signal); } finally { generationController.signal.removeEventListener('abort', cancelWarming); } if (generationController.signal.aborted) throw generationController.signal.reason || new DOMException('Cancelled', 'AbortError'); let body = prefetchedArchitecture.get(key); prefetchedArchitecture.delete(key);
+        if (!body) { const response = await apiFetch('/api/architecture/practice/generate', { method:'POST', headers:{'content-type':'application/json'}, signal:generationController.signal, body:JSON.stringify({ ...request, prefer_prefetched:true }) }); body = await response.json(); if (!response.ok) throw new Error(body.error || 'Architecture generation failed.'); }
+        renderPreparationDetails(body);
+        if (body.status === 'abstained') { renderAbstention(body, scope); return; }
+        if (body.status === 'rejected') { renderRejection(body, scope); return; }
+        generatedAt = new Date().toISOString(); exposure = { isReview:false, count:1 }; generated = { ...body, mode:'architecture', output:{ item:body.item }, inputSources:[] };
+        $('#status').className = 'notice'; $('#status').innerHTML = `${body.prefetched || body.cached ? 'Loaded a prepared' : 'Published a grounded'} <strong>${esc(scope.toUpperCase())}</strong> question using ${body.item.supporting_claim_ids.length} verified relationship${body.item.supporting_claim_ids.length === 1 ? '' : 's'}.`;
+        renderArchitectureItem(body.item);
+      }
+      $('#generate').addEventListener('click', async () => {
+        const button = $('#generate'); generationController = new AbortController(); const clientDeadline = setTimeout(() => generationController?.abort('Client generation deadline exceeded.'), 250_000); generated = undefined; $('#preparation-details').classList.add('hidden'); setGenerating(true); $('#item').classList.add('hidden'); showQuestionEmpty('A question is taking shape', 'We are checking the evidence before showing you a question.'); $('#question-empty').classList.add('is-working'); selected = undefined; revealed = false; feedbackSelections = {};
+        try {
+          if ($('#scope').value !== 'pr') { await generateArchitecture(); return; }
+          const strategy = $('#selection').value; const randomize = strategy !== 'newest';
+          const priorRecords = savedFeedback(); const priorPrNumbers = [...new Set([...priorRecords.map((record) => Number(record.source_pr?.number)), ...seenQuestions.filter((entry) => entry.scope === 'pr').map((entry) => Number(entry.pr_number))].filter(Boolean))]; const reviewCutoff = Date.now() - 7 * 86_400_000; const reviewDuePrNumbers = [...new Set(priorRecords.filter((record) => Date.parse(record.saved_at || record.generated_at || 0) <= reviewCutoff).map((record) => Number(record.source_pr?.number)).filter(Boolean))]; const excludedPrNumbers = strategy === 'unseen_recent' ? [...new Set([...priorPrNumbers, ...sessionPrNumbers])] : [...sessionPrNumbers];
+          const pr_number = debugCandidate?.number || (strategy === 'newest' ? candidateList[0]?.number : undefined);
+          const priorQuestions = [...priorRecords.map((record) => ({ pr_number: Number(record.source_pr?.number), question: record.generation?.question?.question?.text, context: record.generation?.question?.context?.text })), ...seenQuestions.filter((entry) => entry.scope === 'pr').map((entry) => ({ pr_number: Number(entry.pr_number), question: entry.question }))].filter((entry) => Number.isInteger(entry.pr_number) && entry.pr_number > 0 && entry.question).slice(-100); const response = await apiFetch('/api/generate', { method:'POST', headers:{'content-type':'application/json'}, signal:generationController.signal, body:JSON.stringify({ pr_number, randomize, selection_strategy: strategy, exclude_pr_numbers: excludedPrNumbers, prior_pr_numbers: strategy === 'spaced_recall' ? reviewDuePrNumbers : priorPrNumbers, prior_questions: priorQuestions, mental_model_focus: true }) }); const body = await response.json(); if (!response.ok) throw new Error(body.error || 'Generation failed.');
+          renderPreparationDetails(body);
+          generatedAt = new Date().toISOString(); generated = { ...body, inputSources: body.input_sources || [] };
+          if (body.status === 'abstain' || body.status === 'abstained') { const reason = body.output?.abstain_reason || body.reason_code || 'insufficient evidence'; $('#status').className = 'notice'; $('#status').textContent = `No item published: ${String(reason).replaceAll('_', ' ')}.`; return; }
+          if (body.status === 'rejected') { renderGenerationRejection(body); return; }
+          if (body.status !== 'published' || !body.evidence?.pr || !body.output?.item) throw new Error('The server returned an incomplete published PR item. Reload and try again.');
+          const prNumber = Number(body.evidence.pr.number); const priorCount = priorRecords.filter((record) => Number(record.source_pr?.number) === prNumber).length; exposure = { isReview: priorCount > 0, count: priorCount + 1 }; sessionPrNumbers.add(prNumber);
+          $('#status').className = 'notice'; $('#status').innerHTML = `${body.prefetched ? 'Loaded a prepared item' : body.cached ? 'Reopened existing pending item' : body.output.item.review_stage === 'intentional_review' ? 'Published intentional review' : 'Published first-exposure item'} from <a target="_blank" rel="noreferrer" href="${esc(body.evidence.pr.url)}">PR #${body.evidence.pr.number}: ${esc(body.evidence.pr.title)}</a> using ${body.evidence.source_count} evidence artifacts${body.evidence.exclusions.length ? ` (${body.evidence.exclusions.length} excluded by policy)` : ''}. <span class="model">${esc(body.model)}</span>`; renderItem(body.output.item);
+        } catch (error) { $('#status').className = 'notice error'; $('#status').textContent = generationController?.signal.aborted || error.name === 'AbortError' ? 'Generation cancelled or exceeded the four-minute deadline.' : error.message; } finally { clearTimeout(clientDeadline); setGenerating(false); if ($('#item').classList.contains('hidden')) showQuestionEmpty('No question was published', 'Review the status above, adjust the setup if needed, and generate again.'); }
+      });
+      $('#cancel-generation').addEventListener('click', () => generationController?.abort('Cancelled by learner.'));
+      function updateSourcePreview() { const scope = $('#scope').value; const architectureMode = scope !== 'pr'; $('#practice-control').classList.toggle('hidden', architectureMode); $('#anchor-control').classList.toggle('hidden', !architectureMode); $('#source-preview').removeAttribute('title'); if (architectureMode) { const state = architectureCatalog?.scopes?.[scope]; const relationshipCopy = `${formatCoverageCount(state?.claim_count)} source relationship${Number(state?.claim_count) === 1 ? '' : 's'}`; const pathCopy = scope === 'hld' ? ` · ${formatCoverageCount(state?.path_count)} dependency path${Number(state?.path_count) === 1 ? '' : 's'}` : ''; if (state) $('#source-preview').title = `${formatCoverageCount(state.claim_count, { exact: true })} source relationships${scope === 'hld' ? ` · ${formatCoverageCount(state.path_count, { exact: true })} dependency paths` : ''}`; $('#source-preview').textContent = architectureCatalog?.error ? `Architecture index unavailable: ${architectureCatalog.error}` : !architectureCatalog ? 'Indexing server-owned repository snapshots…' : `${state?.eligible ? 'Ready to generate' : `Cannot generate: ${(state?.reason || 'insufficient evidence').replaceAll('_', ' ')}`} · ${relationshipCopy}${pathCopy}`; syncGenerateAvailability(); return; } if (debugCandidate) { syncGenerateAvailability(); return; } const strategy = $('#selection').value; const copy = candidateLoading ? 'Checking this repository for your merged PRs…' : candidateError || (strategy === 'spaced_recall' ? `Prefers PRs merged at least 30 days ago that you practised at least seven days ago. Otherwise, prefers other older PRs, then recent PRs.` : strategy === 'newest' ? `Newest eligible own PR: #${candidateList[0]?.number || '…'} · ${candidateList[0]?.title || ''}` : `New question from ${candidateList.length} recent PR${candidateList.length===1?'':'s'}; completed and same-session PRs are avoided`); $('#source-preview').textContent = copy; syncGenerateAvailability(); }
+      $('#selection').addEventListener('change', updateSourcePreview);
+      $('#scope').addEventListener('change', () => { clearCurrentQuestion(); cancelArchitecturePrefetches(); updateSourcePreview(); $('.source-row').classList.toggle('indexing', $('#scope').value !== 'pr' && !architectureCatalog); if ($('#scope').value !== 'pr' && architectureCatalog) void prefetchEligibleArchitecture($('#scope').value); }); $('#anchor').addEventListener('change', () => { clearCurrentQuestion(); cancelArchitecturePrefetches(); updateSourcePreview(); if ($('#scope').value !== 'pr' && architectureCatalog) void prefetchEligibleArchitecture($('#scope').value); });
+      window.addEventListener('pagehide', () => cancelArchitecturePrefetches());
+      $('#practice-tab').addEventListener('click', () => setView('practice'));
+      $('#history-tab').addEventListener('click', () => setView('history'));
+      $('#history-list').addEventListener('click', (event) => { const button = event.target.closest('.history-entry-button'); if (!button) return; renderHistoryRecord(decodeURIComponent(button.dataset.historyId)); if (matchMedia('(max-width:900px)').matches) $('#history-review').scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start' }); });
+      $('#history-search').addEventListener('input', (event) => { historyQuery = event.target.value; refreshHistory(); });
+      $('#history-filter').addEventListener('change', (event) => { historyFilter = event.target.value; refreshHistory(); });
+      $('.primary-nav').addEventListener('keydown', (event) => { if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return; event.preventDefault(); const practice = event.key === 'ArrowLeft' || event.key === 'Home'; setView(practice ? 'practice' : 'history', true); });
+      $('#export-feedback').addEventListener('click', exportFeedback);
+      $('#import-history-button').addEventListener('click', () => $('#import-history').click());
+      $('#import-history').addEventListener('change', (event) => void importHistory(event.target.files?.[0]));
+      async function hydrateDurableHistory() {
+        try {
+          const response = await apiFetch('/api/history?limit=250');
+          if (!response.ok) {
+            const failure = await response.json();
+            if (failure.error_code === 'history_store_corrupt') {
+              $('#history-storage-status').textContent = 'Durable history is unavailable. Preserve the history files and repair or restore them from a trusted backup before retrying. Browser attempts remain available here; export a backup before clearing browser data.';
+              $('#history-storage-status').classList.remove('hidden');
+            }
+            return;
+          }
+          const body = await response.json();
+          const durable = (body.records || []).map((record) => ({ record_version:'codebase-trail-feedback-v2', record_id:record.id, saved_at:record.updated_at, source_scope:record.metadata?.scope || 'architecture', source_pr:record.metadata?.source_pr || null, generation:{ model:record.metadata?.model || null, question:{ question:{ text:record.question }, answer_options:record.choices || [], correct_option_id:record.answer || null, evidence_pin:record.evidence_pin } }, learner_answer:record.first_attempt ? { selected_option_id:record.first_attempt.selected_option_id || record.first_attempt.selected || null, was_correct:record.first_attempt.was_correct ?? record.first_attempt.correct ?? null } : {}, feedback:record.first_attempt?.feedback || {} }));
+          const browserRecords = savedFeedback(); const browserById = new Map(browserRecords.map((record) => [record.record_id, record]));
+          const enrichedDurable = durable.map((record) => { const browserRecord = browserById.get(record.record_id); return browserRecord ? { ...record, ...browserRecord, saved_at:record.saved_at || browserRecord.saved_at } : record; });
+          storeFeedback(localStorage, feedbackStorageKey, mergeHistoryRecords(browserRecords, enrichedDurable));
+        } catch { /* Browser history remains usable when durable storage is unavailable. */ }
+      }
+      async function initialize() { syncGenerateAvailability(); await hydrateDurableHistory(); refreshExportButton(); await loadRuntimeStatus(); updateSourcePreview(); void loadCandidates(); void loadArchitectureCatalog(); }
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href="/settings"]');
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        $('#navigation-loading').classList.remove('hidden');
+        $('main').inert = true;
+        $('main').setAttribute('aria-busy', 'true');
+      });
+      window.addEventListener('pageshow', () => {
+        $('#navigation-loading').classList.add('hidden');
+        $('main').inert = false;
+        $('main').removeAttribute('aria-busy');
+      });
+      initialize();
+    </script>
+  </body>
+</html>

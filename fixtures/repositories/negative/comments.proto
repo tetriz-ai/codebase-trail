@@ -1,0 +1,5 @@
+// Copyright 2026 Workloom Solutions Private Limited
+// SPDX-License-Identifier: MIT
+syntax = "proto3";
+// import "ghost.proto";
+/* service Ghost { rpc Fake(X) returns (Y); } */

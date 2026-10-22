@@ -1,0 +1,5 @@
+// Copyright 2026 Workloom Solutions Private Limited
+// SPDX-License-Identifier: MIT
+syntax = "proto3";
+import "contracts/common.proto";
+service FixtureService { rpc Run(Request) returns (Response); }
