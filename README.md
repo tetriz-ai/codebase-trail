@@ -10,6 +10,8 @@ Codebase Trail is a Node.js app that runs on your computer and opens its interfa
 [![Reference](https://img.shields.io/badge/reference-docs-5865f2.svg)](docs/technical-reference.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+<a href="https://www.producthunt.com/products/agentic-workflow-kit?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-tetriz-engineering-kit" target="_blank" rel="noopener noreferrer"><img alt="Tetriz Engineering Kit  - Open-source tools for everything around AI coding | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1296838&amp;theme=light&amp;t=1793345913841"></a>
+
 <img src=".github/assets/demo.gif" width="1000" alt="The actual Codebase Trail browser app: choose a topic, generate a question, answer it, and inspect the explanation and source evidence">
 
 Choose → answer → explain → verify. Synthetic repository and fixed local model.
